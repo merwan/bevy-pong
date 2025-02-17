@@ -6,6 +6,14 @@ const PADDLE_Y: f32 = 0.0;
 #[derive(Component)]
 struct Paddle;
 
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_systems(Startup, setup)
+        .add_systems(Update, move_paddle)
+        .run();
+}
+
 fn setup(mut commands: Commands) {
     commands.spawn(Camera2d::default());
 
@@ -21,9 +29,11 @@ fn setup(mut commands: Commands) {
     ));
 }
 
-fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
-        .add_systems(Startup, setup)
-        .run();
+fn move_paddle(keyboard_input: Res<ButtonInput<KeyCode>>) {
+    if keyboard_input.pressed(KeyCode::ArrowUp) {
+        info!("Move up!");
+    }
+    if keyboard_input.pressed(KeyCode::ArrowDown) {
+        info!("Move down!");
+    }
 }
