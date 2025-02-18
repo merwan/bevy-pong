@@ -3,6 +3,8 @@ use bevy::prelude::*;
 const PADDLE_X: f32 = -600.0;
 const PADDLE_Y: f32 = 0.0;
 
+const PADDLE_SPEED: f32 = 400.0;
+
 #[derive(Component)]
 struct Paddle;
 
@@ -29,11 +31,19 @@ fn setup(mut commands: Commands) {
     ));
 }
 
-fn move_paddle(keyboard_input: Res<ButtonInput<KeyCode>>) {
+fn move_paddle(
+    keyboard_input: Res<ButtonInput<KeyCode>>,
+    mut paddle_transform: Single<&mut Transform, With<Paddle>>,
+    time: Res<Time>,
+) {
+    let mut direction = 0.0;
+
     if keyboard_input.pressed(KeyCode::ArrowUp) {
-        info!("Move up!");
+        direction += 1.0;
     }
     if keyboard_input.pressed(KeyCode::ArrowDown) {
-        info!("Move down!");
+        direction -= 1.0;
     }
+    let paddle_delta_y = direction * PADDLE_SPEED * time.delta_secs();
+    paddle_transform.translation.y += paddle_delta_y;
 }
