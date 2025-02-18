@@ -44,6 +44,8 @@ fn move_paddle(
     if keyboard_input.pressed(KeyCode::ArrowDown) {
         direction -= 1.0;
     }
-    let paddle_delta_y = direction * PADDLE_SPEED * time.delta_secs();
-    paddle_transform.translation.y += paddle_delta_y;
+    let new_paddle_y =
+        paddle_transform.translation.y + direction * PADDLE_SPEED * time.delta_secs();
+
+    paddle_transform.translation.y = new_paddle_y.clamp(-300.0, 300.0);
 }
