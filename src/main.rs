@@ -5,8 +5,14 @@ const PADDLE_Y: f32 = 0.0;
 
 const PADDLE_SPEED: f32 = 400.0;
 
+const BALL_X: f32 = 0.0;
+const BALL_Y: f32 = 0.0;
+
 #[derive(Component)]
 struct Paddle;
+
+#[derive(Component)]
+struct Ball;
 
 fn main() {
     App::new()
@@ -28,6 +34,16 @@ fn setup(mut commands: Commands) {
             ..default()
         },
         Transform::from_xyz(PADDLE_X, PADDLE_Y, 0.0),
+    ));
+    // Ball
+    commands.spawn((
+        Ball,
+        Sprite {
+            color: Color::srgb(1.0, 1.0, 1.0),
+            custom_size: Some(Vec2::new(15.0, 15.0)),
+            ..default()
+        },
+        Transform::from_xyz(BALL_X, BALL_Y, 0.0),
     ));
 }
 
